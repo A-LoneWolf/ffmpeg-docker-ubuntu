@@ -14,6 +14,12 @@ RUN     apt-get -yqq update && \
         apt-get autoremove -y && \
         apt-get clean -y
 
+RUN apt -qq install -y curl git gnupg2 wget \
+    apt-transport-https \
+    python3 python3-pip \
+    coreutils aria2 jq pv rclone
+
+
 FROM base as build
 
 ENV         FFMPEG_VERSION=4.3.1 \
