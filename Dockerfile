@@ -5,7 +5,7 @@
 # https://hub.docker.com/r/jrottenberg/ffmpeg/
 #
 #
-FROM        ubuntu:18.04 AS base
+FROM        ubuntu:20.04 AS base
 
 WORKDIR     /tmp/workdir
 
@@ -14,21 +14,15 @@ RUN     apt-get -yqq update && \
         apt-get autoremove -y && \
         apt-get clean -y
 
-RUN apt -qq install -y curl git gnupg2 wget \
-    apt-transport-https \
-    python3 python3-pip \
-    coreutils aria2 jq pv rclone
-
-
 FROM base as build
 
-ENV         FFMPEG_VERSION=4.3.1 \
+ENV         FFMPEG_VERSION=snapshot \
             AOM_VERSION=v1.0.0 \
             FDKAAC_VERSION=0.1.5 \
             FONTCONFIG_VERSION=2.12.4 \
             FREETYPE_VERSION=2.5.5 \
             FRIBIDI_VERSION=0.19.7 \
-            KVAZAAR_VERSION=1.2.0 \
+            KVAZAAR_VERSION=2.0.0 \
             LAME_VERSION=3.100 \
             LIBASS_VERSION=0.13.7 \
             LIBPTHREAD_STUBS_VERSION=0.4 \
@@ -78,6 +72,8 @@ ARG         PKG_CONFIG_PATH="/opt/ffmpeg/share/pkgconfig:/opt/ffmpeg/lib/pkgconf
 ARG         PREFIX=/opt/ffmpeg
 ARG         LD_LIBRARY_PATH="/opt/ffmpeg/lib:/opt/ffmpeg/lib64"
 
+
+ARG DEBIAN_FRONTEND=noninteractive
 
 RUN      buildDeps="autoconf \
                     automake \
